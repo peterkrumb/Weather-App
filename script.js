@@ -67,14 +67,3 @@ function getFiveDay() {
     }
   });
 }
-
-
-
-
-
-
-  
-
-
-
- 
