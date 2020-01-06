@@ -17,8 +17,6 @@ function getCurrentWeather() {
       method: "GET"
     }).then(function(response) {
         console.log(response);
-        localCities.push(cityInput);
-        localStorage.setItem("cities", JSON.stringify(localCities));
         $(".city-name").html(response.name + "(" + date + ")");
         $(".weather-display").attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
         $(".temp").html("Temperature: " + ((response.main.temp - 273.15) * 1.8 + 32).toFixed() + "&#176;F");
