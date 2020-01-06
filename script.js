@@ -1,8 +1,12 @@
 var date = moment().format("L");
+var cities = [];
+var localCities = JSON.parse(localStorage.getItem("cities"));
 
 $("#add-city").on("click", function(event) {
     event.preventDefault();
     getCurrentWeather();
+    $(".five-day").empty();
+    renderButtons();
 });
 
 function getCurrentWeather() {
@@ -14,7 +18,8 @@ function getCurrentWeather() {
       method: "GET"
     }).then(function(response) {
         console.log(response);
-        // Append classes in index with values from API data
+        localCities.push(cityInput);
+        localStorage.setItem("cities", JSON.stringify(localCities));
         $(".city-name").html(response.name + "(" + date + ")");
         $(".weather-display").attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
         $(".temp").html("Temperature: " + ((response.main.temp - 273.15) * 1.8 + 32).toFixed() + "&#176;F");
@@ -53,14 +58,38 @@ function getFiveDay() {
       var cityHumidityForecast = response.list[i].main.humidity;
       
       $(".five-day")
-      
-              .append($("<p>").html(nextDay))//Add the day for the forecast
-              .append($("<img src=" + cityIconURLForecast + ">")) //add the weather icon
-              .append($("<p>").html("Temp: " + cityTempForecast + " °F"))//add the temperature
-              .append($("<p>").html("Humidity: " + cityHumidityForecast + "%"))//add the humidity
-      console.log(nextDay + ", " + cityHumidityForecast + ", " + cityTempForecast)
-
-
-  }
+      .append($("<div>").addClass("col-sm-2 days")
+      .append($("<p>").html(nextDay))//Add the day for the forecast
+      .append($("<img src=" + cityIconURLForecast + ">")) //add the weather icon
+      .append($("<p>").html("Temp: " + cityTempForecast + " °F"))//add the temperature
+      .append($("<p>").html("Humidity: " + cityHumidityForecast + "%")))//add the humidity
+      console.log(nextDay + ", " + cityHumidityForecast + ", " + cityTempForecast);
+    }
+  });
 }
-  )};
+
+
+function renderButtons() {
+  $("#buttons-view").empty();
+for (var i = 0; i < localCities.length; i++) {
+  var a = $("<button>");
+  a.addClass("btn big-btn");
+  a.attr("data-name", localCities[i]);
+  a.text(localCities[i]);
+  $("#buttons-view").append(a);
+}
+}
+
+$(document).on("click", ".city", function() {
+  city = $(this).attr("data-name");
+  getCurrentWeather();
+});
+renderButtons();
+
+
+
+  
+
+
+
+ 
