@@ -6,7 +6,6 @@ $("#add-city").on("click", function(event) {
     event.preventDefault();
     getCurrentWeather();
     $(".five-day").empty();
-    renderButtons();
 });
 
 function getCurrentWeather() {
