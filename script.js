@@ -69,22 +69,7 @@ function getFiveDay() {
 }
 
 
-function renderButtons() {
-  $("#buttons-view").empty();
-for (var i = 0; i < localCities.length; i++) {
-  var a = $("<button>");
-  a.addClass("btn big-btn");
-  a.attr("data-name", localCities[i]);
-  a.text(localCities[i]);
-  $("#buttons-view").append(a);
-}
-}
 
-$(document).on("click", ".city", function() {
-  city = $(this).attr("data-name");
-  getCurrentWeather();
-});
-renderButtons();
 
 
 
